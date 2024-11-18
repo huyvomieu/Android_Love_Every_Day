@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_user"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    tools:ignore="ExtraText">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_marginTop="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:id="@+id/my_toolbar"
+        android:elevation="4dp"
+        android:background="#F29F9F"
+       />
+    baseline_circle_24
+    <ImageView
+        android:id="@+id/avatarImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone" />
+    <!--        ẩn ảnh để nó thành avt app dùng
+            android:visibility="gone"
+    -->
+    <TextView
+        android:id="@+id/txt_dem"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/baseline_circle_24"
+        android:gravity="center"
+        android:text="Đang yêu\n600\nNgày"
+        android:textColor="#FFFFFF"
+        android:textSize="35sp" />
+    <TableLayout
+        android:layout_marginTop="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <TableRow>
+            <androidx.cardview.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                app:cardCornerRadius="60dp"
+                app:cardElevation="4dp"
+                android:layout_margin="8dp">
+
+                <ImageView
+                    android:id="@+id/avt_user1"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:gravity="center">
+                </ImageView>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                app:cardCornerRadius="60dp"
+                app:cardElevation="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="120dp">
+
+                <ImageView
+                    android:id="@+id/avt_user2"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:gravity="center">
+                </ImageView>
+            </androidx.cardview.widget.CardView>
+        </TableRow>
+
+        <TableRow>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            <TextView
+                android:id="@+id/txt_user1"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="HUY"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_user2"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="120sp"
+                android:gravity="center"
+                android:text="THẢO"
+                android:textSize="20sp"
+                android:textStyle="bold" /></TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".send_message_activity">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30sp"
+        android:stretchColumns="0">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gửi lời yêu thương cho nửa kia"
+                android:textColor="#FB0000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="80sp"
+                android:background="@drawable/baseline_navigate_next_24"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="match_parent" >
+
+            <EditText
+                android:id="@+id/editTextText"
+                android:layout_margin="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:ems="10"
+                android:inputType="text"
+                android:background="@drawable/border"
+                android:text=""
+                android:layout_span="2"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="20sp"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="50sp"
+                android:layout_marginRight="20dp"
+                android:rotation="322"
+                android:background="@drawable/baseline_send_24"
+                android:gravity="center" />
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

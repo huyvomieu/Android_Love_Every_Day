@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/add"
+        android:title="Thêm ngày kỷ niệm"
+        android:icon="@drawable/baseline_library_add_24"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/space"
+        android:title=""
+        android:enabled="false"
+        android:visible="true"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/space2"
+        android:title=""
+        android:enabled="false"
+        android:visible="true"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/note"
+        android:title="Gửi lời yêu thương"
+        app:showAsAction="always"
+        android:icon="@drawable/baseline_edit_square_24"
+        />
+    <item
+        android:id="@+id/share"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="Chia sẻ"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/notification"
+        android:icon="@drawable/baseline_notifications_none_24"
+        android:title="Thông báo"
+        app:showAsAction="always"/>
+    <item
+    android:id="@+id/settings"
+    android:icon="@drawable/baseline_settings_24"
+    android:title="Settings"
+    app:showAsAction="always"/>
+</menu>

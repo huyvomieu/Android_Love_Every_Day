@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<item
+    android:title="Lưu ảnh"
+    android:id="@+id/save_image"
+    />
+    <item
+        android:title="Chia sẻ lên Facebook"
+        android:id="@+id/share_in_facebook"
+        />
+    <item
+        android:title="Đóng"
+        android:id="@+id/close_menu"
+        />
+</menu>
