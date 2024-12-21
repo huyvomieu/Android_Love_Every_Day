@@ -16,7 +16,7 @@ import com.example.cuoiky.entity.UserPair;
 
 import java.util.Calendar;
 
-public class add_userActivity extends AppCompatActivity {
+public class AddUserActivity extends AppCompatActivity {
     Button btn_setday,btn_dem;
     TextView txt_dem, txt_saveDate;
 
@@ -39,8 +39,8 @@ public class add_userActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 UserPair pair = new UserPair("nickname 1", "nickname 2", txt_saveDate.getText().toString());
-                DatabaseApp.getInstance(add_userActivity.this).userPaierDao().insert(pair);
-                Intent intent = new Intent(add_userActivity.this, MainActivity.class);
+                DatabaseApp.getInstance(AddUserActivity.this).userPaierDao().insert(pair);
+                Intent intent = new Intent(AddUserActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -55,13 +55,14 @@ public class add_userActivity extends AppCompatActivity {
         // Hiển thị DatePickerDialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 (DatePicker view, int selectedYear, int selectedMonth, int selectedDay) -> {
-                    // selectedMonth + 1 vì tháng bắt đầu từ 0
+//                    // selectedMonth + 1 vì tháng bắt đầu từ 0
                     String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
                     txt_saveDate.setText(selectedDate);
                     CountDayLove couter = new CountDayLove();
-                    long countDay = couter.countDay(this);
+                    long countDay = couter.countDay2(this,selectedDay,selectedMonth+1, selectedYear);
                     txt_dem.setText(countDay+"");
                 }, year, month, day);
         datePickerDialog.show();
     }
+
 }

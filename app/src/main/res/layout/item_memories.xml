@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:background="#F5F5F5"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="8dp"
+    android:elevation="2dp">
+
+        <!-- Time Text -->
+        <TextView
+            android:id="@+id/txt_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:text="10m"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!-- Image -->
+        <ImageView
+            android:id="@+id/img_icon"
+            android:layout_width="66dp"
+            android:layout_height="82dp"
+            android:layout_marginEnd="8dp"
+            android:background="#CCCCCC"
+            android:contentDescription="Icon"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_avt_default_user2_round" />
+        <!-- Text and Input Layout -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Title Text -->
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ngày đầu đi ăn"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Date Input -->
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/edit_text"
+                android:padding="8dp"
+                android:textSize="14sp" />
+        </LinearLayout>
+</LinearLayout>

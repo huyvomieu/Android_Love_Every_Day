@@ -11,7 +11,7 @@ import com.example.cuoiky.entity.UserPair;
 public interface UserPairDAO {
     @Query("SELECT COUNT(*) FROM userpair")
     int count();
-    @Query("SELECT  * FROM userpair")
+    @Query("SELECT  * FROM userpair limit(1)")
     UserPair get();
     @Query("UPDATE userpair SET male = :maleName ")
     void updateMale(String maleName);

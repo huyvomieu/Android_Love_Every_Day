@@ -6,17 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".add_userActivity">
+    tools:context=".AddUserActivity">
 
     <TextView
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Chọn ngày bắt đầu chuyện tình đôi ta"
         android:textColor="#E61515"
-        android:textSize="20sp"
+        android:textSize="23sp"
         android:textStyle="bold"
+        android:width="50dp"
         />
 
     <TextView
@@ -27,7 +28,7 @@
         android:fontFamily="serif"
         android:text="0"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="#E75788"
         android:textSize="100sp" />
 
     <LinearLayout
@@ -41,6 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="90dp"
             android:text="xx/xx/xxxx"
+            android:textColor="#E75788"
+
             android:textAlignment="center"
             android:textSize="25sp" />
 
@@ -48,6 +51,7 @@
             android:id="@+id/btn_setday"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            app:backgroundTint="@null"
             android:background="@drawable/baseline_calendar_month_24"
             android:text="" />
 
@@ -55,7 +59,10 @@
 
     <Button
         android:id="@+id/btn_dem"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bắt đầu yêu đương" />
+        android:text="Bắt đầu yêu đương"
+        app:backgroundTint="@null"
+        android:background="@drawable/custome_btn"/>
 </LinearLayout>

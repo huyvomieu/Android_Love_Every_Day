@@ -1,9 +1,18 @@
 package com.example.cuoiky;
 
+import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,6 +20,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,16 +29,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.content.FileProvider;
 
 import com.example.cuoiky.database.DatabaseApp;
 import com.example.cuoiky.entity.UserPair;
+import com.example.cuoiky.util.MemoriesReminder;
+import com.example.cuoiky.util.NotificationHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 public class MainActivity extends AppCompatActivity {
     TextView txt_dem,txt_user1, txt_user2;
@@ -36,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     UserPair userpair = null;
     private static final int PICK_IMAGE_1 = 1;
     private static final int PICK_IMAGE_2 = 2;
+    Uri uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,36 +55,45 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
+        // Tạo Notification Channel để cho phép đặt thông báo (chỉ hoạt động trên Android 8.0 trở lên)
+        NotificationHelper.createNotificationChannel(this);
+
         // Lấy ImageView từ layout
         ImageView avatarImageView = findViewById(R.id.avatarImageView);
         // Thiết lập ảnh từ mipmap cho ImageView
         avatarImageView.setImageResource(R.mipmap.ic_launcher);
+        getWidget();
+
         // Kiểm tra trong database có thông tin chưa
         int isCheckUser = DatabaseApp.getInstance(MainActivity.this).userPaierDao().count();
         if(isCheckUser == 0) {
-            Intent intent = new Intent(MainActivity.this, add_userActivity.class );
+            Intent intent = new Intent(MainActivity.this, AddUserActivity.class );
             startActivity(intent);
             finish();
         }
-        getWidget();
-        // Đổ data vào view
-        UserPair user = DatabaseApp.getInstance(MainActivity.this).userPaierDao().get();
-        userpair = user;
-        txt_user1.setText(user.getMale());
-        txt_user2.setText(user.getFemale());
-        CountDayLove counter = new CountDayLove();
+        else {
+            // Đổ data vào view
+            UserPair user = DatabaseApp.getInstance(MainActivity.this).userPaierDao().get();
+            userpair = user;
+            txt_user1.setText(user.getMale());
+            txt_user2.setText(user.getFemale());
+            CountDayLove counter = new CountDayLove();
 
-        String content = "Đang yêu \n" + counter.countDay(this) + "\n" + "ngày";
-        txt_dem.setText(content);
-        // Sửa data
-        img_user1.setOnClickListener(view -> openImageChooser(PICK_IMAGE_1));
-        img_user2.setOnClickListener(view -> openImageChooser(PICK_IMAGE_2));
-        txt_user1.setOnClickListener(view -> openInputDialog(1,"nick name 1"));
-        txt_user2.setOnClickListener(view ->  openInputDialog(2,"nick name 2"));
-        // Load ảnh lên view nếu có
-        loadSavedImages();
+            String content = "Đang yêu \n" + counter.countDay(this) + "\n" + "ngày";
+            txt_dem.setText(content);
+            // Sửa data
+            img_user1.setOnClickListener(view -> openImageChooser(PICK_IMAGE_1));
+            img_user2.setOnClickListener(view -> openImageChooser(PICK_IMAGE_2));
+            txt_user1.setOnClickListener(view -> openInputDialog(1,"nick name 1"));
+            txt_user2.setOnClickListener(view ->  openInputDialog(2,"nick name 2"));
+            // Load ảnh lên view nếu có
+            loadSavedImages();
 
+        }
+        checkNotificationPermission();
     }
+
     private void openInputDialog(int i,String nickname) {
         // Tạo EditText để nhập dữ liệu
         EditText edtName = new EditText(this);
@@ -212,17 +233,128 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        if(id == R.id.add) {
+            Intent intent = new Intent(MainActivity.this, ShareMemoriesActivity.class);
+            startActivity(intent);
+            return true;
+        }
         if(id == R.id.note) {
-            Intent intent = new Intent(MainActivity.this, send_message_activity.class);
+            Intent intent = new Intent(MainActivity.this, SendMessageActivity.class);
             startActivity(intent);
             return true;
         }
         if(id == R.id.settings) {
+            MemoriesReminder.setMemoriesReminder(MainActivity.this,90, "6/12/2023", "thaoo");
+            return true;
+        }
+        if(id == R.id.share) {
+            View v = findViewById(R.id.share);
+            // Tạo Popup Menu
+            PopupMenu popupMenu = new PopupMenu(MainActivity.this,v );
+            MenuInflater inflater = popupMenu.getMenuInflater();
+            inflater.inflate(R.menu.share_menu, popupMenu.getMenu());
+
+            // Thiết lập vị trí của menu (Dưới Button)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                popupMenu.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+            }
+
+            // Xử lý sự kiện chọn mục menu
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem itemPop) {
+                    int idPop = itemPop.getItemId();
+                    if(idPop == R.id.save_image) {
+                        takeScreenshotAndSave();
+                        return true;
+                    }
+                    if(idPop == R.id.share_in_facebook) {
+                        shareContentToFacebook();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+            // Hiển thị menu
+            popupMenu.show();
+//
+            return true;
+        }
+        if(id == R.id.notification) {
+            Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void shareContentToFacebook() {
+        String content = "";
+        UserPair user = DatabaseApp.getInstance(MainActivity.this).userPaierDao().get();
+        CountDayLove counter = new CountDayLove(); // hàm đếm số ngày yêu
+        content += user.getFemale() + " và " + user.getMale() + " đang yêu nhau được " + counter.countDay(MainActivity.this) + " ngày!\n"
+                + "Hãy tải app để tận hưởng khoảng khắc này nhé!!!\n" + "#loveeveryday";
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("image/*");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, content);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.setPackage("com.facebook.katana"); // Chỉ mở Facebook
+            startActivity(shareIntent);
+        } catch (ActivityNotFoundException e) {
+            // Nếu Facebook không được cài đặt, mở trình duyệt
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/sharer/sharer.php?u=" + Uri.encode(content)));
+            startActivity(browserIntent);
+        }
+    }
+
+    private void checkNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission("android.permission.POST_NOTIFICATIONS") != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{"android.permission.POST_NOTIFICATIONS"}, 1);
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission("android.permission.READ_MEDIA_IMAGES") != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{"android.permission.READ_MEDIA_IMAGES"}, 100);
+            }
+        }
+
+
+    }
+
+
+    public void takeScreenshotAndSave() {
+        try {
+            // 1. Chụp màn hình
+            View rootView = getWindow().getDecorView().getRootView();
+            rootView.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(rootView.getDrawingCache());
+            rootView.setDrawingCacheEnabled(false);
+
+            // 2. Lưu ảnh vào MediaStore
+            ContentResolver resolver = getContentResolver();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "screenshot_" + System.currentTimeMillis() + ".png");
+            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png");
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/Screenshots");
+
+            Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+
+            if (imageUri != null) {
+                uri = imageUri;
+                OutputStream outputStream = resolver.openOutputStream(imageUri);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                if (outputStream != null) outputStream.close();
+                // Thông báo ảnh đã lưu
+                Toast.makeText(this, "Ảnh đã được lưu vào điện thoại!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to save screenshot", Toast.LENGTH_SHORT).show();
+        }
+    }
     void getWidget() {
         txt_dem = findViewById(R.id.txt_dem);
         txt_user1 = findViewById(R.id.txt_user1);

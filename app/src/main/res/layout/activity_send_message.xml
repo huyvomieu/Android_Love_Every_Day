@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".send_message_activity">
+    tools:context=".SendMessageActivity">
 
     <TableLayout
         android:layout_width="match_parent"
@@ -28,53 +28,50 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/back3"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="80sp"
                 android:background="@drawable/baseline_navigate_next_24"
                 android:gravity="center" />
-        </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="match_parent" >
-
-            <EditText
-                android:id="@+id/editTextText"
-                android:layout_margin="30dp"
-                android:layout_width="wrap_content"
-                android:layout_height="300dp"
-                android:ems="10"
-                android:inputType="text"
-                android:background="@drawable/border"
-                android:text=""
-                android:layout_span="2"/>
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="20sp"
-                android:layout_height="wrap_content"
-                android:text="" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="40dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="50sp"
-                android:layout_marginRight="20dp"
-                android:rotation="322"
-                android:background="@drawable/baseline_send_24"
-                android:gravity="center" />
         </TableRow>
 
     </TableLayout>
 
-</LinearLayout>
+    <ListView
+        android:id="@+id/lv_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100px"
+        android:paddingTop="60px">
+
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="2200px">
+
+        <EditText
+            android:id="@+id/edt_message"
+            android:layout_width="290dp"
+            android:layout_height="49dp"
+            android:background="@drawable/border"
+            android:ems="10"
+            android:inputType="text"
+            android:text="" />
+
+        <Button
+            android:id="@+id/btn_gui"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:background="@drawable/baseline_send_24"
+            android:backgroundTint="@null"
+            android:layout_marginLeft="50dp"
+            android:gravity="center"
+            android:rotation="322" />
+    </LinearLayout>
+
+</FrameLayout>

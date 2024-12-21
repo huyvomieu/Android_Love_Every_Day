@@ -16,7 +16,6 @@
         android:elevation="4dp"
         android:background="#F29F9F"
        />
-    baseline_circle_24
     <ImageView
         android:id="@+id/avatarImageView"
         android:layout_width="100dp"
@@ -41,48 +40,69 @@
         android:layout_marginTop="70dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-        <TableRow>
+        android:stretchColumns="*">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <androidx.cardview.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                app:cardCornerRadius="60dp"
-                app:cardElevation="4dp"
-                android:layout_margin="8dp">
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="100dp"
+                app:cardElevation="4dp">
 
                 <ImageView
                     android:id="@+id/avt_user1"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:gravity="center">
-                </ImageView>
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:gravity="center"
+                    android:src="@mipmap/ic_avt_default_user2_round"></ImageView>
+
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                app:cardCornerRadius="60dp"
-                app:cardElevation="4dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="120dp">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/icon_heart"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:color/white"
+                    android:src="@drawable/heart" />
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="110dp"
+                android:layout_height="80dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="100dp"
+                app:cardElevation="4dp">
 
                 <ImageView
                     android:id="@+id/avt_user2"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:gravity="center">
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:gravity="center"
+                    android:src="@mipmap/ic_avt_default_user2_round">
+
                 </ImageView>
+
             </androidx.cardview.widget.CardView>
         </TableRow>
 
-        <TableRow>
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
+            android:layout_height="match_parent">
             <TextView
                 android:id="@+id/txt_user1"
                 android:layout_width="130dp"
