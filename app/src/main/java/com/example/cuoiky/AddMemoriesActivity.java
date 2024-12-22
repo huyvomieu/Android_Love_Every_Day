@@ -54,8 +54,10 @@ public class AddMemoriesActivity extends AppCompatActivity {
     void saveMemories() {
         try {
             String title = edt_Title.getText().toString();
-            String date = txt_addDate.getText().toString();
+            String date = txt_addDate.getText().toString(); // Lay ngày kỉ niệm
+            // Lưu tên file ảnh ngẫu nhiên với thời gian hiện tại
             String nameImage = "Image" + System.currentTimeMillis() + ".jpg";
+            // Lấy uri Upload lên
             String imgUri = saveFileFromUri(imageUri, nameImage);
             if(title.length() == 0) {
                 Toast.makeText(this, "Vui lòng nhập tiêu đề yêu", Toast.LENGTH_SHORT).show();
@@ -72,10 +74,11 @@ public class AddMemoriesActivity extends AppCompatActivity {
             Memories m = new Memories(title,date,imgUri);
             DatabaseApp.getInstance(AddMemoriesActivity.this).memoriesDAO().insert(m);
             Toast.makeText(this, "Thêm kỉ niệm thành công", Toast.LENGTH_SHORT).show();
+            // Cài đặt ngày thông báo kỷ niệm
             MemoriesReminder.setMemoriesReminder(AddMemoriesActivity.this,m.getId(), m.getDate(),m.getTitle());
             Intent resultIntent = new Intent();
             setResult(RESULT_OK, resultIntent); // Gửi kết quả và trạng thái OK
-            finish();
+            finish(); // Quay lại ShareMemoriesActivity
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }

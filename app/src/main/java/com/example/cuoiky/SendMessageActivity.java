@@ -41,7 +41,6 @@ public class SendMessageActivity extends AppCompatActivity {
         adp = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,list);
         lv.setAdapter(adp);
     }
-
     private void sendMessage() {
         String text = edt_message.getText().toString();
         if(text.length() == 0) {
@@ -66,7 +65,6 @@ public class SendMessageActivity extends AppCompatActivity {
         list.add(text);
         adp.notifyDataSetChanged();
     }
-
     private void getWidget() {
         back1 = findViewById(R.id.back3);
         edt_message = findViewById(R.id.edt_message);

@@ -55,10 +55,11 @@ public class AddUserActivity extends AppCompatActivity {
         // Hiển thị DatePickerDialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 (DatePicker view, int selectedYear, int selectedMonth, int selectedDay) -> {
-//                    // selectedMonth + 1 vì tháng bắt đầu từ 0
+                    // selectedMonth + 1 vì tháng bắt đầu từ 0
                     String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
                     txt_saveDate.setText(selectedDate);
-                    CountDayLove couter = new CountDayLove();
+                    CountDayLove couter = new CountDayLove(); // Lớp đếm ngày yêu
+                    // Đếm ngày khi truyền ngày bắt đầu yêu vào
                     long countDay = couter.countDay2(this,selectedDay,selectedMonth+1, selectedYear);
                     txt_dem.setText(countDay+"");
                 }, year, month, day);

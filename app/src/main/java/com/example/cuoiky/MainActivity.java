@@ -1,5 +1,8 @@
 package com.example.cuoiky;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -11,14 +14,19 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -47,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     UserPair userpair = null;
     private static final int PICK_IMAGE_1 = 1;
     private static final int PICK_IMAGE_2 = 2;
+    private FrameLayout mainFrame;
     Uri uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-
+        //tạo trái tym rơi xuôg
+        mainFrame = findViewById(R.id.main_frame);
+        startFallingHearts();
         // Tạo Notification Channel để cho phép đặt thông báo (chỉ hoạt động trên Android 8.0 trở lên)
         NotificationHelper.createNotificationChannel(this);
 
@@ -93,6 +104,43 @@ public class MainActivity extends AppCompatActivity {
         }
         checkNotificationPermission();
     }
+
+    private void startFallingHearts() {
+        final Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                createFallingHeart();
+                handler.postDelayed(this, 300); // Tạo trái tim mới mỗi 300ms
+            }
+        };
+        handler.post(runnable);
+    }
+
+    private void createFallingHeart() {
+        final ImageView heart = new ImageView(this);
+        heart.setImageResource(R.drawable.small_heart_fall); // Sử dụng trái tim nhỏ
+        heart.setLayoutParams(new FrameLayout.LayoutParams(70, 70)); // Kích thước 5dp
+        heart.setX((float) (Math.random() * mainFrame.getWidth()));
+
+        mainFrame.addView(heart);
+
+        // Tạo animation rơi
+        ObjectAnimator animator = ObjectAnimator.ofFloat(heart, "translationY", 0, mainFrame.getHeight());
+        animator.setDuration(3000 + (long) (Math.random() * 1500)); // Thời gian rơi ngẫu nhiên
+        animator.setInterpolator(new LinearInterpolator());
+
+        animator.start();
+
+        // Xóa trái tim sau khi rơi hết
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mainFrame.removeView(heart);
+            }
+        });
+    }
+
 
     private void openInputDialog(int i,String nickname) {
         // Tạo EditText để nhập dữ liệu
@@ -299,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("image/*");
             shareIntent.putExtra(Intent.EXTRA_TEXT, content);
-            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri); //
             shareIntent.setPackage("com.facebook.katana"); // Chỉ mở Facebook
             startActivity(shareIntent);
         } catch (ActivityNotFoundException e) {
@@ -361,6 +409,9 @@ public class MainActivity extends AppCompatActivity {
         txt_user2 = findViewById(R.id.txt_user2);
         img_user1 = findViewById(R.id.avt_user1);
         img_user2 = findViewById(R.id.avt_user2);
+        ImageView heartIcon = findViewById(R.id.icon_heart);
+        Animation blinkAnimation = AnimationUtils.loadAnimation(this, R.anim.heart_animations);
+        heartIcon.startAnimation(blinkAnimation);
     }
 
 }
