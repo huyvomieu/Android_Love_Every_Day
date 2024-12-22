@@ -36,7 +36,7 @@ public class MemoriesReminder {
             intent.putExtra("time", memoriesDay);
             intent.putExtra("id", id);
             // Sử dụng id của memories làm ID cho thông báo
-            int REQUEST_CODE = id;
+            int REQUEST_CODE = (int)System.currentTimeMillis();
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, REQUEST_CODE, intent, PendingIntent.FLAG_MUTABLE);
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
